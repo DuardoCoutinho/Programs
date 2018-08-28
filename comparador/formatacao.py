@@ -1,5 +1,5 @@
 txt1 = open('novosusuarios.txt') 
-resul = open("txtformatado.csv", "w")
+resul = open("newuseradd.csv", "w")
 zero = True
 
 def main():
@@ -10,15 +10,18 @@ def main():
         #newstring(formata(j[0]), formata(j[1]), formata(j[2]))
         
 def newstring(name, sobname, matri):
-    string = "\n\"CN=" + sobname +",OU=Alunos,DC=FaculdadeMeta,DC=EDU\",user,"+matri+","+name+","+matri+"@faculdademeta.edu,"+sobname
-    #escrevertxt(string)
-    return string
-
-def escrevertxt(txt):
     global zero
     if zero:
-        txt = 'DN,objectClass,sAMAccountName,givenName,userPrincipalName,sn'
+        string = 'DN,objectClass,sAMAccountName,givenName,userPrincipalName,sn'
         zero = False
+    else:
+        string = "\n\"CN=" + sobname +",OU=Alunos,DC=FaculdadeMeta,DC=EDU\",user,"+matri+","+name+","+matri+"@faculdademeta.edu,"+sobname
+    escrevertxt(string)
+    
+    
+
+def escrevertxt(txt):
+    
     resul.write(txt)
     
 
