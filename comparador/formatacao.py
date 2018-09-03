@@ -1,5 +1,8 @@
+from datetime import datetime
+
+now = datetime.now()
 txt1 = open('novosusuarios.txt') 
-resul = open("newuseradd.csv", "w")
+resul = open('newuseradd.txt', "w")
 zero = True
 
 def main():
@@ -9,7 +12,7 @@ def main():
         j = txt.split('\t')
         #newstring(formata(j[0]), formata(j[1]), formata(j[2]))
         
-def newstring(name, sobname, matri):
+def newstring(matri, name, sobname):
     global zero
     if zero:
         string = 'DN,objectClass,sAMAccountName,givenName,userPrincipalName,sn'
@@ -21,15 +24,13 @@ def newstring(name, sobname, matri):
     
 
 def escrevertxt(txt):
-    
     resul.write(txt)
     
-
 def formata(str1):
     
     str1 = str1.replace("\n","")
     str1 = str1.replace("\r", "")
-    str1 = str1.split('\t')
+    str1 = str1.split(';')
     return str1
     
 
