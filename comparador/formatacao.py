@@ -23,12 +23,12 @@ def newstring(name, sobname, matri):
         zero = False
     else:
         string = "\n\"CN=" + sobname +",OU=Alunos,DC=FaculdadeMeta,DC=EDU\",user,"+matri+","+name+","+matri+"@faculdademeta.edu,"+sobname
-    escrevertxt(string)
+    
 
     
 
 def escrevertxt(txt):
-    resul.write(txt)
+    
     
 def formata(str1):
     
