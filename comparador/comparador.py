@@ -23,7 +23,7 @@ def main():
     
     for txttest in newuser:
         
-        txttest = form.formata(txttest)
+        txttest = formata(txttest)
         #print(txttest)
         cur.execute('SELECT matricula FROM user WHERE matricula = '+txttest[0]+'')
         user = cur.fetchone()
@@ -37,13 +37,13 @@ def main():
                criaruser(txttest)
                
         elif txttest[3] == 'Cursando': # se houver no banco, verificação do estado dele
-            unblock(txttest[0], txttest[3])
+            unblock(txttest[0])
 
         elif txttest[3] == 'Trancado':
-            block(txttest[0], txttest[3])
+            block(txttest[0])
 
         elif txttest[3] == 'Concluido' or txttest[3] == 'Saiu' or txttest[3] == 'Cancelado':
-            exclui(txttest[0], txttest[3])
+            exclui(txttest[0])
         else:
             print(txttest)
 
@@ -56,46 +56,42 @@ def criaruser(txt):
     cur.execute(sql)
     db.commit()        
                     
-def block(matri, estado):
-    print('bloqueado')
-    print(matri)
-    print(estado)
-    sql = ('UPDATE user SET estado = "Bloqueados" WHERE matricula='+matri+'')
+def block(matri):
+    sql = ('UPDATE user SET estado = "Bloqueado" WHERE matricula='+matri+'')
     cur.execute(sql)
     db.commit()
     
-def unblock(matri, estado):
-    #print('liberado')
-    #print(matri)
-    #print(estado)
-    sql = ('UPDATE user SET estado = "Cursandos" WHERE matricula='+matri+'')
+def unblock(matri):
+    sql = ('UPDATE user SET estado = "Cursando" WHERE matricula='+matri+'')
     cur.execute(sql)
     db.commit()
     
-def exclui(matri, estado):
-    print('exclui')
-    print(matri)
-    print(estado)
-    sql = ('UPDATE user SET estado = "Excluidos" WHERE matricula='+matri+'')
+def exclui(matri):
+    sql = ('UPDATE user SET estado = "Excluido" WHERE matricula='+matri+'')
     cur.execute(sql)
     db.commit()
 
 
-
+zero = True
 def newstring(name, sobname, matri):
     global zero
     if zero:
         string = 'DN,objectClass,sAMAccountName,givenName,userPrincipalName,sn'
         zero = False
     else:
-        string = "\n\"CN=" + sobname +",OU=Alunos,DC=FaculdadeMeta,DC=EDU\",user,"+matri+","+name+","+matri+"@faculdademeta.edu,"+sobname
+        #string = "\n\"CN=" + sobname +",OU=Alunos,DC=FaculdadeMeta,DC=EDU\",user,"+matri+","+name+","+matri+"@faculdademeta.edu,"+sobname
+        string = "\n\"CN={sobrenome},OU=Alunos,DC=FaculdadeMeta,DC=EDU\",user,{matricula},{nome},{matricula}@faculdademeta.edu,{sobrenome}".format(sobrenome = sobname, matricula = matri, nome=name)
+    print(string)
     resul.write(string)
 
 
+def formata(str1):
+    str1 = str1.replace("\n", "")
+    str1 = str1.replace("\r", "")
+    str1 = str1.split(';')
+    return str1
 
 
-    
 if __name__=='__main__':
     main()
     db.close()
-    
