@@ -67,7 +67,7 @@ def unblock(matri):
     db.commit()
     
 def exclui(matri):
-    sql = ('UPDATE user SET estado = "Excluido" WHERE matricula='+matri+'')
+    sql = ('DELETE FROM user WHERE matricula='+matri+'')
     cur.execute(sql)
     db.commit()
 
