@@ -1,13 +1,14 @@
 #import formatacao as form
 import sqlite3
+import os
 
 db = sqlite3.connect('usuarios.db')
 cur = db.cursor()
 
-resul = open("newuseradd.csv", "w")
-block = open("userblock.csv", "w")
-unblock = open("userunblock.csv", "w")
-delete = open("userdeleted.csv", "w")
+resul = open("Usuarios-novos.txt", "w")
+#block = open("userblock.csv", "w")
+#unblock = open("userunblock.csv", "w")
+#delete = open("userdeleted.csv", "w")
 
     
 def main():
@@ -36,16 +37,12 @@ def main():
         if  user is None: #Cria user no banco
                criaruser(txttest)
                
-        elif txttest[3] == 'Cursando': # se houver no banco, verificação do estado dele
-            unblock(txttest[0])
-
-        elif txttest[3] == 'Trancado':
-            block(txttest[0])
-
-        elif txttest[3] == 'Concluido' or txttest[3] == 'Saiu' or txttest[3] == 'Cancelado':
-            exclui(txttest[0])
         else:
-            print(txttest)
+            veriestado(txttest, False)
+
+
+
+
 
 
             
@@ -91,7 +88,25 @@ def formata(str1):
     str1 = str1.split(';')
     return str1
 
+def veriestado(user, veri):
+    if not veri:
+        if user[3] == 'Cursando':  # se houver no banco, verificação do estado dele
+            unblock(user[0])
+
+        elif user[3] == 'Trancado':
+            block(user[0])
+
+        elif user[3] == 'Concluido' or user[3] == 'Saiu' or user[3] == 'Cancelado':
+            exclui(user[0])
+        else:
+            print('Não deu certo')
+
+
+
+
 
 if __name__=='__main__':
     main()
     db.close()
+
+    #os.system('csvde -i -f C:\Usuarios-novos.txt -j C:')
