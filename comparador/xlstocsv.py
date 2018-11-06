@@ -1,4 +1,3 @@
-
 def formatação(x):
     x = x.replace('\r','')
     x = x.replace(' ', '')
@@ -24,7 +23,7 @@ def formatação(x):
     return x
 
 def main():
-    relatorio = open('Relatorio.xls',encoding="ISO-8859-1")
+    relatorio = open('Relatorio.Customizado.GUID.9.xls', encoding="ISO-8859-1")
     resultado = open('resultados.csv', 'w')
     lista_linhas = []
     

@@ -4,7 +4,6 @@ import os
 
 db = sqlite3.connect('usuarios.db')
 cur = db.cursor()
-resul = open("Usuarios-novos.", "w")
 novosalunos = []
 
 def main():
@@ -95,18 +94,17 @@ def veriestado(user):
 
 def veriestado_novosalunos():
     for aluno in novosalunos:
-        veriestado(aluno())
+        veriestado(aluno)
 
 if __name__=='__main__':
     xlstocsv.main()
     main()
-    resul.close()
     os.system('csvde -i -f C:\\Users\\Administrador.WIN-TRRJKTG898F\\Desktop\\Programs-master(3)\\Programs-master\\comparador\\Usuarios-novos.txt')
     os.system('dsquery user -stalepwd 2000 | dsmod user -pwd @gt1-m3t4 -mustchpwd yes ')
 
     veriestado_novosalunos()
     os.remove('resultados.csv')
-    os.remove('relaotrio.xls')
+    os.remove('Relatorio.Customizado.GUID.9.xls')
     
     db.close()
         
