@@ -1,10 +1,10 @@
-
+import xlstocsv
 import sqlite3
 import os
 
 db = sqlite3.connect('usuarios.db')
 cur = db.cursor()
-resul = open("Usuarios-novos.txt", "w")
+resul = open("Usuarios-novos.", "w")
 novosalunos = []
 
 def main():
@@ -12,7 +12,7 @@ def main():
     #txttest[1] = Nome
     #txttest[2] = Sobrenome
     #txttest[3] = Descrição
-    newuser = open('Relatorio.Customizado.GUID.60.csv').readlines()
+    newuser = open('resultados.csv').readlines()
     zero = True
     
     for txttest in newuser:
@@ -76,6 +76,10 @@ def formata(str1):
     str1 = str1.replace("\r", "")
     str1 = str1.replace("-","")
     str1 = str1.split(';')
+    del(str1[5])
+    del(str1[2])
+    del(str1[0])
+
     return str1
 
 def veriestado(user):
@@ -94,12 +98,15 @@ def veriestado_novosalunos():
         veriestado(aluno())
 
 if __name__=='__main__':
+    xlstocsv.main()
     main()
     resul.close()
     os.system('csvde -i -f C:\\Users\\Administrador.WIN-TRRJKTG898F\\Desktop\\Programs-master(3)\\Programs-master\\comparador\\Usuarios-novos.txt')
     os.system('dsquery user -stalepwd 2000 | dsmod user -pwd @gt1-m3t4 -mustchpwd yes ')
 
     veriestado_novosalunos()
+    os.remove('resultados.csv')
+    os.remove('relaotrio.xls')
     
     db.close()
         
